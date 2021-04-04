@@ -26,8 +26,8 @@ League of Data will be built using Javascript, CSS, and the Riot Games API.
 ## Implementation Timeline
 
 ### Day 1: 
-* Set Up file structure and project.
-* Play around with and study the Riot Games API.
+* Set up file structure and project
+* Play around with and study the Riot Games API
 * Render basic player information in text on the page
 * Design landing page
 
