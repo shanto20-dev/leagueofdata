@@ -7,7 +7,7 @@ League of Data is a visually compelling data visualizer for League of Legends da
 
 In League of Data, a user will be able to search for a player via their "Summoner Name" (in-game name). The user will then be able to select whether they want to view stats about the player or stats about the player's recent games. The Player Data will be an aesthetic view of the player's key stats, favorite champions, favorite items, etc. The Recent Games page will have visual representations about some stats about the player's recent games - including stats about team's gold, KDA, objectives, etc.
 
-In addition, League of Data will include buttons to view top player's stats on the homepage (in case the user don't have a summoner name to look up). 
+In addition, League of Data will include buttons to view top player's stats on the homepage (in case the user doesn't have a summoner name to look up). 
 
 ## Wireframes
 
