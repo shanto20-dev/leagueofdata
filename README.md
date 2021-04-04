@@ -1,7 +1,7 @@
 # leagueofdata
 ## Background and Overview
 
-League of Data is a visually compelling data visualizer for League of Legends data about any player of your choosing. League of Data offers two pages of data - stats about the player in general and stats about the player's recent games. 
+League of Data is a visually compelling data visualizer for League of Legends data for any player of your choosing. League of Data offers two pages of data - stats about the player in general and stats about the player's recent games. 
 
 ## Functionality and MVPs
 
