@@ -1,1 +1,1 @@
-{"version":3,"sources":[],"names":[],"mappings":"","file":"main.css","sourceRoot":""}
+{"version":3,"sources":["webpack:///./index.scss"],"names":[],"mappings":"AAAA,QACI,aACA,sBACA,mB","file":"main.css","sourcesContent":[".splash{\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}"],"sourceRoot":""}

@@ -24,10 +24,15 @@
     "url": "https://github.com/shanto20-dev/leagueofdata/issues"
   },
   "homepage": "https://github.com/shanto20-dev/leagueofdata#readme",
-  "dependencies": {},
+  "dependencies": {
+    "core-js": "^3.10.0",
+    "node-fetch": "^2.6.1",
+    "regenerator-runtime": "^0.13.7"
+  },
   "devDependencies": {
     "@babel/core": "^7.13.14",
     "@babel/plugin-proposal-optional-chaining": "^7.13.12",
+    "@babel/plugin-transform-runtime": "^7.13.10",
     "@babel/preset-env": "^7.13.12",
     "autoprefixer": "^10.2.5",
     "babel-loader": "^8.2.2",
@@ -46,5 +51,10 @@
     "webpack-cli": "^4.6.0",
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.7.3"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
   }
 }

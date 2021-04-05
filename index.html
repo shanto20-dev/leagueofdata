@@ -4,13 +4,31 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <link rel="stylesheet" href="./dist/main.css" />
+        <link rel="stylesheet" href="./dist/main.css" type="text/css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+        <script src="https://d3js.org/d3.v6.min.js"></script>
+        <script src="https://d3js.org/d3-scale.v3.min.js"></script>
         <title>League of Data</title>
     </head>
 
     <body>
-        <!-- <canvas id="game-canvas"></canvas> -->
-        <h1 id="DOM-demo">DOM Demo</h1>
+        <div class="page-background">
+            <div class="page-container">
+                <div class="splash">
+                    <h1>League of Data</h1>
+                    <div class="search-div">
+                        <input type="text" class="search" placeholder="Enter Summoner Name">
+                    </div>
+                    <div class="pro-div">
+                        <h2>Or, check out the stats of some top players</h2>
+                        <button class="pro-button" id="fakerButton">Faker</button>
+                        <button class="pro-button" id="bangButton">Bang</button>
+                        <button class="pro-button" id="bjergButton">Bjergsen</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script src="./dist/main.js"></script>
     </body>
 </html>
