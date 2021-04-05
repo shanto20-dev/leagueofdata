@@ -19,7 +19,7 @@ In addition, League of Data will include buttons to view top player's stats on t
 
 ## Architecture and Technology
 
-League of Data will be built using Javascript, CSS, the Riot Games API for data, and D3 for Data Visualization. 
+League of Data will be built using Javascript, HTML & CSS, the Riot Games API for data, and D3 for data visualization. 
 
 
 
