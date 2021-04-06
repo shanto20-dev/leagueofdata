@@ -5,6 +5,7 @@ body{
     background-color: rgba(255,255,255,0.4);
     background-blend-mode: lighten;
     transition: .5 ease-in;
+    margin: 0;
 }
 
 .splash{
@@ -203,7 +204,8 @@ body{
 .champs-graph-container{
     width: 1000px;
     height: 500px;
-    margin-top: 7%;
+    margin-top: 5%;
+    margin-left: 10%;
     animation: favChampsSlideIn;
     animation-duration: 1s;
     animation-iteration-count: 1;
@@ -229,4 +231,100 @@ body{
 }
 
 
+.cs-div{
+    width: 100%;
+    padding-bottom: 20%;
+    background: linear-gradient(to right,  rgb(134, 135, 228) 0%, rgb(33, 185, 231) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: slideInCsDiv;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+}
 
+@keyframes slideInCsDiv {
+    0% {
+        transform: translateY(200px);
+        opacity: 0;
+    }
+    70% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0);
+        
+    }
+}
+
+
+
+.average-cs-header{
+    width: 50%;
+    margin-top: 5%;
+    color: rgb(255, 255, 255);
+    font-family: 'Righteous', cursive;
+    font-size: 46px;
+    text-align: center;
+
+}
+
+.csStat{
+    width: 50%;
+    margin-bottom: 5%;
+    color: rgb(255, 255, 255);
+    font-family: 'Righteous', cursive;
+    text-align: center;
+    font-size: 30px;
+    transition: opacity 250ms ease-in;
+    animation: csAppear;
+    animation-duration: 3s;
+    animation-iteration-count: 1;
+}
+
+.minion-div{
+    background-image: url('../assets/minion.png');
+    height: 480px;
+    width: 550px;
+    animation: csAppear;
+    animation-duration: 3s;
+    animation-iteration-count: 1;
+}
+
+@keyframes csAppear{
+    0%{
+        opacity: 0;
+    }
+    20%{
+        opacity: 0;
+    }
+    70%{
+        opacity: .45;
+    }
+    100%{
+        opacity: 1;
+    }
+
+}
+
+.damage-div{
+    width: 100%;
+    padding-bottom: 30%;
+    background: linear-gradient(to right,  rgb(108, 109, 156) 0%, rgb(15, 114, 145) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.damage-graph-header{
+    color: rgb(255, 255, 255);
+    font-family: 'Righteous', cursive;
+    text-align: center;
+    font-size: 30px;
+
+}
+
+.damage-rect:hover{
+    opacity: 0.66;
+    fill:rgb(12, 73, 17)
+}
