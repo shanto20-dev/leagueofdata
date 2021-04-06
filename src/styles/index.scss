@@ -4,6 +4,7 @@ body{
     background-attachment: fixed;
     background-color: rgba(255,255,255,0.4);
     background-blend-mode: lighten;
+    transition: .5 ease-in;
 }
 
 .splash{
@@ -104,7 +105,7 @@ body{
 
 
 .player-page{
-    transition: 1s;
+    transition: 1s ease-in-out;
     background-color: rgba(255, 255, 255, 0.637);
     background-blend-mode: lighten;
     background-position: 3% 60%;
@@ -123,3 +124,109 @@ body{
     flex-direction: column;
     align-items: center;
 }
+
+.pic-container{
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+
+}
+
+.faker-image{
+    background-image: url("../assets/faker-pic.png");
+    height: 600px;
+    width: 30%;
+    background-position: center;
+    margin-left: 5%;
+    transition: .5s ease-in;
+    animation: imageSlideIn;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+}
+
+.bjerg-image{
+    background-image: url("../assets/bjerg-pic.png");
+    height: 600px;
+    width: 30%;
+    background-position: center;
+    margin-left: 5%;
+    transition: .5s ease-in;
+    animation: imageSlideIn;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+}
+
+.bang-image{
+    background-image: url("../assets/bang-pic.png");
+    height: 600px;
+    width: 30%;
+    background-position: center;
+    margin-left: 5%;
+    transition: .5s ease-in;
+    animation: imageSlideIn;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    z-index: 5;
+}
+
+.jensen-image{
+    background-image: url("../assets/jensen-pic.png");
+    height: 600px;
+    width: 30%;
+    background-position: center;
+    margin-left: 5%;
+    transition: .5s ease-in;
+    animation: imageSlideIn;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    z-index: 5;
+}
+
+@keyframes imageSlideIn {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    70% {
+        opacity: 1;
+    }
+
+}
+
+.played-champs-header{
+    text-align: center;
+    color: rgb(61, 131, 211);
+    font-family: 'Righteous', cursive;
+}
+
+
+.champs-graph-container{
+    width: 1000px;
+    height: 500px;
+    margin-top: 7%;
+    animation: favChampsSlideIn;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+
+}
+
+@keyframes favChampsSlideIn{
+    0% {
+        transform: translateY(-200px) scale(0.5,0.5);
+        opacity: 0;
+    }
+    70% {
+        opacity: 1;
+    }
+    100%{
+        transform: translateY(0) scale(1,1);
+    }
+
+}
+
+.favorite-champ-rect:hover{
+    opacity: 0.66;
+}
+
+
+
