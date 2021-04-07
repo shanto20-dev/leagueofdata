@@ -10,7 +10,7 @@ const regeneratorRuntime = require("regenerator-runtime");
 export const filterByPlayer = (playerName) => d3.csv('../data/2021_Match_Data.csv')
 .then( (result) => {    
     let filteredResult
-    filteredResult = result.filter( game => game.player === playerName)
+    filteredResult = result.filter( game => game.player.toLowerCase() === playerName.toLowerCase())
     return filteredResult
 }
 
@@ -32,19 +32,33 @@ export const champsPlayed = (playerName) => {
 
 // creates it all really
 
-export function topChampsData(playerName) {
+export function renderData(playerName) {
     let champCount = {};
+
     filterByPlayer(playerName)
     .then ( (games) => {
         let champs = [];
         let bestCSGames = [];
         let damageTaken = [];
         let damageGiven = [];
+        let goldGames = [];
+        
+        if (!games.length){
+            const picContainer = document.querySelector(".pic-container");
+            const noExist = document.createElement("h1");
+            noExist.textContent = "Unfortunately, we do not have data on this player. Our dataset is limited to professional players in the 2021 season from January to April.";
+            noExist.classList.add("no-exist-header");
+            picContainer.appendChild(noExist);
+        } else{
+
+
+        
         games.forEach(game => {
             champs.push(game.champion);
             bestCSGames.push(game.totalcs);
-            damageTaken.push(game.damagetakenperminute)
-            damageGiven.push(game.dpm)
+            damageTaken.push(game.damagetakenperminute);
+            damageGiven.push(game.dpm);
+            goldGames.push(game.earnedgold);
         });
         champs.forEach(champ => {
             if (!champCount[champ]){
@@ -56,14 +70,15 @@ export function topChampsData(playerName) {
 
 
         let averageCS = d3.mean(bestCSGames);
-        let csSection = document.querySelector(".cs-div");
-        let csStat = document.createElement("h1");
-        csStat.innerHTML = `${playerName} sure loves to mess up those minions. They usually have an average CS of <span style="color:#cc0000">${averageCS}</span> by the end of the game!`;
-        csStat.classList.add("csStat")
-        csSection.appendChild(csStat);
-        let minionDiv = document.createElement("div")
-        minionDiv.classList.add("minion-div");
-        csSection.appendChild(minionDiv);
+        createMinionsObserver(playerName, averageCS)
+        // let csSection = document.querySelector(".cs-div");
+        // let csStat = document.createElement("h1");
+        // csStat.innerHTML = `${playerName} sure loves to mess up those minions. They usually have an average CS of <span style="color:#cc0000">${averageCS}</span> by the end of the game!`;
+        // csStat.classList.add("csStat")
+        // csSection.appendChild(csStat);
+        // let minionDiv = document.createElement("div")
+        // minionDiv.classList.add("minion-div");
+        // csSection.appendChild(minionDiv);
 
         let averageGiven = d3.mean(damageGiven);
         let averageTaken = d3.mean(damageTaken);
@@ -71,42 +86,201 @@ export function topChampsData(playerName) {
         let dmgTaken = {name: "Average DMG Taken per minute", amount: averageTaken}
         let dmgData = [dmgGiven, dmgTaken]
 
-        createDmg(dmgData, playerName);
+        createDmgObserver(dmgData, playerName);
+        // createDmg(dmgData, playerName);
 
-        console.log(averageGiven)
-        console.log(averageTaken)
+        let averageGold = d3.mean(goldGames);
+        createGoldObserver(averageGold, playerName)
 
 
-    }); 
+    }});
 }
 
 
-// export function bestCSGames(playerName) {
-//     filterByPlayer(playerName)
-//     .then ( (games) => {
-//         let bestCSGames = [];
-//         games.forEach(game => {
-//             bestCSGames.push(game.totalcs);
-//         });
-//         console.log(bestCSGames)
+const createMinions = (playerName, averageCS) => {
+    let csSection = document.querySelector(".cs-div");
+    let csStat = document.createElement("h1");
+        csStat.innerHTML = `${playerName} sure loves to mess up those minions. They usually have an average CS of <span style="color:#cc0000">${averageCS}</span> by the end of the game!`;
+        csStat.classList.add("csStat")
+        csSection.appendChild(csStat);
+        let minionDiv = document.createElement("div")
+        minionDiv.classList.add("minion-div");
+        csSection.appendChild(minionDiv);
+}
 
-//         let averageCS = d3.mean(bestCSGames);
-//         let averagePerMin = d3.mean(bestCSmin);
+const createMinionsObserver = (playerName, averageCS) => {
+    
+    let options = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.9
+    }
 
-//         let csSection = document.querySelector(".cs-div");
-//         let csStat = document.createElement("h1");
-//         csStat.textContent = `${playerName} sure loves to mess up those minions. They usually have an average CS of ${averageCS} by the end of the game!`;
-//         csSection.appendChild(csStat);
-        
-//     }); 
-// }
+    let renderCounter = 0;
+
+    let handleIntersect = (entries, observer) => {
+        entries.forEach(entry => {
+            // Each entry describes an intersection change for one observed
+            // target element:
+            //   entry.boundingClientRect
+            //   entry.intersectionRatio
+            //   entry.intersectionRect
+            //   entry.isIntersecting
+            //   entry.rootBounds
+            //   entry.target
+            //   entry.time
+            if (entry.isIntersecting && renderCounter === 0){
+                createMinions(playerName, averageCS);
+                renderCounter++;
+            }
+        });
+    };
+
+    let observer = new IntersectionObserver(handleIntersect, options);
+    let csSection = document.querySelector(".cs-div");
+
+    observer.observe(csSection);
+
+}
+
+
+const createGold = (playerName, averageGold) => {
+    let goldSection = document.querySelector(".gold-div");
+    let goldStat = document.createElement("h1");
+        goldStat.innerHTML = `${playerName} is quite certainly getting that bread. They end up earning an average of <span style="color:#ffd736">${averageGold}</span> gold each game!`;
+        goldStat.classList.add("goldStat")
+        goldSection.appendChild(goldStat);
+        let goldPicDiv = document.createElement("div")
+        goldPicDiv.classList.add("gold-pic-div")
+        goldSection.appendChild(goldPicDiv);
+        let goldPic1 = document.createElement("div")
+        goldPic1.classList.add("gold-pic1");
+        goldPicDiv.appendChild(goldPic1);
+        let goldPic2 = document.createElement("div")
+        goldPic2.classList.add("gold-pic2");
+        goldPicDiv.appendChild(goldPic2);
+}
+
+const createGoldObserver = (averageGold, playerName) => {
+
+    let options = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.9
+    }
+
+    let renderCounter = 0;
+
+
+
+    let handleIntersect = (entries, observer) => {
+        entries.forEach(entry => {
+            // Each entry describes an intersection change for one observed
+            // target element:
+            //   entry.boundingClientRect
+            //   entry.intersectionRatio
+            //   entry.intersectionRect
+            //   entry.isIntersecting
+            //   entry.rootBounds
+            //   entry.target
+            //   entry.time
+            if (entry.isIntersecting && renderCounter === 0) {
+                goldAnimate();
+                setTimeout( () => {
+                    createGold(playerName, averageGold);
+
+                }, 2000)
+                renderCounter++;
+            }
+        });
+    };
+
+    let observer = new IntersectionObserver(handleIntersect, options);
+
+    let goldTarget = document.querySelector('.gold-div');
+    observer.observe(goldTarget);
+
+}
+
+const goldAnimate = () => {
+    let goldDiv = document.querySelector(".gold-div")
+
+    for (let index = 0; index < 75; index++) {
+        let coin = document.createElement("span");
+        coin.classList.add("coin");
+        coin.style.top = "0";
+        coin.style.marginLeft = `${Math.floor(Math.random() * 100) + 1 + '%'} `
+        coin.style.marginRight = `${Math.floor(Math.random() * 100) + 1 + '%'}`
+        coin.style.marginTop = `${Math.floor(Math.random() * 50) + 1 + '%'}`
+        goldDiv.appendChild(coin);
+    }
+    // let coin1 = document.createElement("span");
+    // let coin2 = document.createElement("h1");
+    // let coin3 = document.createElement("h1");
+    // let coin4 = document.createElement("h1");
+    // let coin5 = document.createElement("h1");
+    // let coin6 = document.createElement("h1");
+    // let coin7 = document.createElement("h1");
+
+    // let coins = [coin1, coin2, coin3, coin4, coin5, coin6, coin7]
+
+    // coins.forEach( coin => {
+    //     coin.classList.add("coin");
+    //     coin.style.top = "0";
+    //     coin.style.marginLeft = `${Math.floor(Math.random() * 100) + 1 + '%'} `
+    //     coin.style.marginRight = `${Math.floor(Math.random() * 100) + 1 + '%'}`
+    //     goldDiv.appendChild(coin);
+    // })
+
+    setTimeout( () => {
+        let coins = document.querySelectorAll(".coin");
+        coins.forEach( coin => coin.remove());
+
+    }, 2000)
+
+}
 
 
 
 
+const createDmgObserver = (dmgData, playerName) => {
+
+
+    let options = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.9
+    }
+
+    let renderCounter = 0;
 
 
 
+    let handleIntersect = (entries, observer) => {
+        entries.forEach(entry => {
+            // Each entry describes an intersection change for one observed
+            // target element:
+            //   entry.boundingClientRect
+            //   entry.intersectionRatio
+            //   entry.intersectionRect
+            //   entry.isIntersecting
+            //   entry.rootBounds
+            //   entry.target
+            //   entry.time
+            if (entry.isIntersecting && renderCounter === 0) {
+                createDmg(dmgData, playerName);
+                renderCounter++;
+            }
+        });
+    };
+
+    let observer = new IntersectionObserver(handleIntersect, options);
+
+    let damageTarget = document.querySelector('.damage-div');
+    observer.observe(damageTarget);
+
+
+}
 
 
 
@@ -260,7 +434,7 @@ const createDmg = (data, playerName) => {
 
     svg.selectAll("rect")
         .transition()
-        .duration(800)
+        .duration(2000)
         .attr("y", function(d) { return y(d.amount); })
         .attr("height", function(d) { return y(0) - y(d.amount); })
 

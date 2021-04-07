@@ -133,10 +133,34 @@ body{
 
 }
 
+.no-exist-header{
+    text-align: center;
+    color: rgb(61, 131, 211);
+    font-family: 'Righteous', cursive;
+    width: 50%;
+    margin-top: 10%;
+    animation: favChampsSlideIn;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+}
+
 .faker-image{
     background-image: url("../assets/faker-pic.png");
     height: 600px;
     width: 30%;
+    background-position: center;
+    margin-left: 5%;
+    transition: .5s ease-in;
+    animation: imageSlideIn;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+}
+
+.gamer-image{
+    background-image: url("../assets/gamer-image.png");
+    height: 600px;
+    width: 30%;
+    background-repeat: no-repeat;
     background-position: center;
     margin-left: 5%;
     transition: .5s ease-in;
@@ -233,7 +257,7 @@ body{
 
 .cs-div{
     width: 100%;
-    padding-bottom: 20%;
+    padding-bottom: 30%;
     background: linear-gradient(to right,  rgb(134, 135, 228) 0%, rgb(33, 185, 231) 100%);
     display: flex;
     flex-direction: column;
@@ -287,7 +311,7 @@ body{
     height: 480px;
     width: 550px;
     animation: csAppear;
-    animation-duration: 3s;
+    animation-duration: 2s;
     animation-iteration-count: 1;
 }
 
@@ -296,10 +320,10 @@ body{
         opacity: 0;
     }
     20%{
-        opacity: 0;
+        opacity: .2;
     }
     70%{
-        opacity: .45;
+        opacity: .6;
     }
     100%{
         opacity: 1;
@@ -321,10 +345,97 @@ body{
     font-family: 'Righteous', cursive;
     text-align: center;
     font-size: 30px;
+    animation: csAppear;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
 
 }
 
 .damage-rect:hover{
     opacity: 0.66;
     fill:rgb(12, 73, 17)
+}
+
+
+.gold-div{
+    width: 100%;
+    padding-bottom: 30%;
+    background: linear-gradient(to right,  rgb(157, 124, 189) 0%, rgb(18, 113, 238) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.coin{
+    width: 50px;
+    height: 50px;
+    background-image: url('../assets/coin.png');
+    animation: drop;
+    animation-duration: 2.5s;
+    animation-iteration-count: 1;
+    background-position: center;
+    background-size: contain;
+    position: fixed;
+
+}
+
+@keyframes drop {
+    0%{opacity: 1}
+    70%{opacity: .1}
+    100% {transform: translateY(100vh); opacity: 0}
+}
+
+.goldStat{
+    width: 50%;
+    margin-bottom: 5%;
+    color: rgb(255, 255, 255);
+    font-family: 'Righteous', cursive;
+    text-align: center;
+    font-size: 30px;
+    transition: opacity 250ms ease-in;
+    animation: csAppear;
+    animation-duration: 3s;
+    animation-iteration-count: 1;
+
+}
+
+.gold-pic1{
+    background-image: url('../assets/moneybag.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 480px;
+    width: 550px;
+    animation: imageSlideIn;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+    margin-right: 10%;
+
+}
+
+.gold-pic2{
+    background-image: url('../assets/moneybag.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 480px;
+    width: 550px;
+    animation: imageSlideInOpposite;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+
+}
+
+.gold-pic-div{
+    display: flex;
+    
+}
+
+@keyframes imageSlideInOpposite {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    70% {
+        opacity: 1;
+    }
+
 }
