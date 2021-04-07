@@ -189,7 +189,7 @@ const createGoldObserver = (averageGold, playerName) => {
                 setTimeout( () => {
                     createGold(playerName, averageGold);
 
-                }, 2000)
+                }, 1500)
                 renderCounter++;
             }
         });
