@@ -61,6 +61,15 @@ document.addEventListener("DOMContentLoaded", () => {
             page.appendChild(goldSection);
             goldSection.appendChild(goldHeader);
 
+
+            let kdaSection = document.createElement("div");
+            kdaSection.classList.add("kda-div");
+            let kdaHeader = document.createElement("h1");
+            kdaHeader.textContent = "Killing Me Softly"
+            kdaHeader.classList.add("average-cs-header");
+            page.appendChild(kdaSection);
+            kdaSection.appendChild(kdaHeader);
+
         
         }
     });
@@ -119,6 +128,15 @@ document.addEventListener("DOMContentLoaded", () => {
         page.appendChild(goldSection);
         goldSection.appendChild(goldHeader);
 
+
+        let kdaSection = document.createElement("div");
+        kdaSection.classList.add("kda-div");
+        let kdaHeader = document.createElement("h1");
+        kdaHeader.textContent = "Killing Me Softly"
+        kdaHeader.classList.add("average-cs-header");
+        page.appendChild(kdaSection);
+        kdaSection.appendChild(kdaHeader);
+
     })
 
     const bangButton = document.querySelector("#bangButton")
@@ -170,6 +188,16 @@ document.addEventListener("DOMContentLoaded", () => {
         goldHeader.classList.add("average-cs-header");
         page.appendChild(goldSection);
         goldSection.appendChild(goldHeader);
+
+
+
+        let kdaSection = document.createElement("div");
+        kdaSection.classList.add("kda-div");
+        let kdaHeader = document.createElement("h1");
+        kdaHeader.textContent = "Killing Me Softly"
+        kdaHeader.classList.add("average-cs-header");
+        page.appendChild(kdaSection);
+        kdaSection.appendChild(kdaHeader);
     })
 
     // const bjergButton = document.querySelector("#bjergButton")
@@ -241,6 +269,16 @@ document.addEventListener("DOMContentLoaded", () => {
         page.appendChild(goldSection);
         goldSection.appendChild(goldHeader);
 
+
+
+
+        let kdaSection = document.createElement("div");
+        kdaSection.classList.add("kda-div");
+        let kdaHeader = document.createElement("h1");
+        kdaHeader.textContent = "Killing Me Softly"
+        kdaHeader.classList.add("average-cs-header");
+        page.appendChild(kdaSection);
+        kdaSection.appendChild(kdaHeader);
     })
 
 });    

@@ -42,6 +42,9 @@ export function renderData(playerName) {
         let damageTaken = [];
         let damageGiven = [];
         let goldGames = [];
+        let totalKills = [];
+        let totalAssists = [];
+        let totalDeaths = [];
         
         if (!games.length){
             const picContainer = document.querySelector(".pic-container");
@@ -59,6 +62,9 @@ export function renderData(playerName) {
             damageTaken.push(game.damagetakenperminute);
             damageGiven.push(game.dpm);
             goldGames.push(game.earnedgold);
+            totalKills.push(game.kills);
+            totalAssists.push(game.assists);
+            totalDeaths.push(game.deaths);
         });
         champs.forEach(champ => {
             if (!champCount[champ]){
@@ -91,6 +97,16 @@ export function renderData(playerName) {
 
         let averageGold = d3.mean(goldGames);
         createGoldObserver(averageGold, playerName)
+
+        let totalKillCount = d3.sum(totalKills);
+        let totalAssistCount = d3.sum(totalAssists);
+        let totalDeathCount = d3.sum(totalDeaths);
+        let totalKillData = {name: "Kills", amount: totalKillCount};
+        let totalAssistData = {name: "Assists", amount: totalAssistCount};
+        let totalDeathData = {name: "Deaths", amount: totalDeathCount};
+        let totalKDAData = [totalKillData, totalAssistData, totalDeathData];
+
+        createKDAObserver(totalKDAData, playerName);
 
 
     }});
@@ -166,7 +182,7 @@ const createGoldObserver = (averageGold, playerName) => {
     let options = {
     root: null,
     rootMargin: '0px',
-    threshold: 0.9
+    threshold: 0.5
     }
 
     let renderCounter = 0;
@@ -206,38 +222,21 @@ const goldAnimate = () => {
     let goldDiv = document.querySelector(".gold-div")
 
     for (let index = 0; index < 75; index++) {
-        let coin = document.createElement("span");
-        coin.classList.add("coin");
-        coin.style.top = "0";
-        coin.style.marginLeft = `${Math.floor(Math.random() * 100) + 1 + '%'} `
-        coin.style.marginRight = `${Math.floor(Math.random() * 100) + 1 + '%'}`
-        coin.style.marginTop = `${Math.floor(Math.random() * 50) + 1 + '%'}`
-        goldDiv.appendChild(coin);
+        setTimeout( () => {
+            let coin = document.createElement("span");
+            coin.classList.add("coin");
+            coin.style.top = "0";
+            coin.style.marginLeft = `${Math.floor(Math.random() * 100) + 1 + '%'} `
+            coin.style.marginRight = `${Math.floor(Math.random() * 100) + 1 + '%'}`
+            coin.style.marginTop = `${Math.floor(Math.random() * 50) + 1 + '%'}`
+            goldDiv.appendChild(coin);
+        }, (Math.floor(Math.random() * 50) + 1))
     }
-    // let coin1 = document.createElement("span");
-    // let coin2 = document.createElement("h1");
-    // let coin3 = document.createElement("h1");
-    // let coin4 = document.createElement("h1");
-    // let coin5 = document.createElement("h1");
-    // let coin6 = document.createElement("h1");
-    // let coin7 = document.createElement("h1");
-
-    // let coins = [coin1, coin2, coin3, coin4, coin5, coin6, coin7]
-
-    // coins.forEach( coin => {
-    //     coin.classList.add("coin");
-    //     coin.style.top = "0";
-    //     coin.style.marginLeft = `${Math.floor(Math.random() * 100) + 1 + '%'} `
-    //     coin.style.marginRight = `${Math.floor(Math.random() * 100) + 1 + '%'}`
-    //     goldDiv.appendChild(coin);
-    // })
-
     setTimeout( () => {
         let coins = document.querySelectorAll(".coin");
         coins.forEach( coin => coin.remove());
 
     }, 2000)
-
 }
 
 
@@ -281,6 +280,48 @@ const createDmgObserver = (dmgData, playerName) => {
 
 
 }
+
+
+
+const createKDAObserver = (kdaData, playerName) => {
+
+
+    let options = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.9
+    }
+
+    let renderCounter = 0;
+
+
+
+    let handleIntersect = (entries, observer) => {
+        entries.forEach(entry => {
+            // Each entry describes an intersection change for one observed
+            // target element:
+            //   entry.boundingClientRect
+            //   entry.intersectionRatio
+            //   entry.intersectionRect
+            //   entry.isIntersecting
+            //   entry.rootBounds
+            //   entry.target
+            //   entry.time
+            if (entry.isIntersecting && renderCounter === 0) {
+                createKDA(kdaData, playerName);
+                renderCounter++;
+            }
+        });
+    };
+
+    let observer = new IntersectionObserver(handleIntersect, options);
+
+    let kdaTarget = document.querySelector('.kda-div');
+    observer.observe(kdaTarget);
+
+
+}
+
 
 
 
@@ -407,15 +448,86 @@ const createDmg = (data, playerName) => {
 
     svg
         .append('g')
-        .attr('fill', 'darkred')
         .selectAll('rect')
-        .data(data.sort((a,b) => d3.descending(a.amount, b.amount)))
+        .data(data)
         .join('rect')
             .attr('x', (d, i) => x(i))
             .attr('y', (d) => y(0))
             .attr('height', d => y(0) - y(0))
             .attr('width', x.bandwidth())
-            .attr('class', 'damage-rect')
+            .attr('class', (d, i)  => `damage-rect-${d.name}`)
+
+    function xAxis(g) {
+        g.attr('transform', `translate(0, ${height - margin.bottom})`)
+        .call(d3.axisBottom(x).tickFormat(i => data[i].name))
+        .attr('font-size', '20px')
+
+    }
+
+    function yAxis(g) {
+        g.attr('transform', `translate(${margin.left}), 0)`)
+        .call(d3.axisLeft(y).ticks(null, data.format))
+        .attr('font-size', '20px')
+    }
+
+    
+
+    svg.selectAll("rect")
+        .transition()
+        .duration(2000)
+        .attr("y", function(d) { return y(d.amount); })
+        .attr("height", function(d) { return y(0) - y(d.amount); })
+
+    svg.append('g').call(xAxis);
+    svg.append('g').call(yAxis);
+    svg.node();
+
+}
+
+
+const createKDA = (data, playerName) => {
+
+    const kdaDiv = document.querySelector(".kda-div");
+    let svgContainer = document.createElement("div")
+    svgContainer.setAttribute('class', 'kda-graph-container');
+    kdaDiv.appendChild(svgContainer);
+    let kdaGraphHeader = document.createElement("h1");
+    kdaGraphHeader.textContent = `${playerName}'s total kills, deaths, and assists this season`;
+    kdaGraphHeader.classList.add("kda-graph-header")
+    svgContainer.append(kdaGraphHeader);
+
+
+    const width = 1000;
+    const height = 500;
+    const margin = { top: 50, bottom: 50, left: 50, right: 50};
+
+    const svg = d3.select('.kda-div')
+        .append('svg')
+        .attr('height', height - margin.top - margin.bottom)
+        .attr('width', width - margin.left - margin.right)
+        .attr('viewBox', [0, 0, width, height]);
+
+    const x = d3.scaleBand()
+        .domain(d3.range(3))
+        .range([margin.left, width - margin.right])
+        .padding(0.1);
+
+    const y = d3.scaleLinear()
+        .domain([0, 250])
+        .range([height - margin.bottom, margin.top]);
+
+    svg
+        .append('g')
+        // .attr('fill', 'darkred')
+        .selectAll('rect')
+        .data(data)
+        .join('rect')
+            .attr('x', (d, i) => x(i))
+            .attr('y', (d) => y(0))
+            .attr('height', d => y(0) - y(0))
+            .attr('width', x.bandwidth())
+            .attr('class', (d, i)  => `kda-rect-${d.name}`)
+            .attr('fill', 'blue')
 
     function xAxis(g) {
         g.attr('transform', `translate(0, ${height - margin.bottom})`)

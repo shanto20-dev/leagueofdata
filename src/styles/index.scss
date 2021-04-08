@@ -250,6 +250,10 @@ body{
 
 }
 
+.favorite-champ-rect{
+    transition: .17s;
+}
+
 .favorite-champ-rect:hover{
     opacity: 0.66;
 }
@@ -351,9 +355,25 @@ body{
 
 }
 
-.damage-rect:hover{
+.Given {
+    fill:rgb(29, 148, 78);
+    transition: 0.17s;
+}
+
+.Taken {
+    fill:rgb(139, 24, 63);
+    transition: 0.17s;
+}
+
+
+.Given:hover{
     opacity: 0.66;
     fill:rgb(12, 73, 17)
+}
+
+.Taken:hover{
+    opacity: 0.66;
+    fill:rgb(100, 9, 65)
 }
 
 
@@ -426,7 +446,7 @@ body{
 
 .gold-pic-div{
     display: flex;
-    
+
 }
 
 @keyframes imageSlideInOpposite {
@@ -438,4 +458,55 @@ body{
         opacity: 1;
     }
 
+}
+
+
+.kda-div{
+    width: 100%;
+    padding-bottom: 30%;
+    background: linear-gradient(to right,  rgb(196, 110, 181) 0%, rgb(161, 8, 92) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.kda-graph-header{
+    color: rgb(255, 255, 255);
+    font-family: 'Righteous', cursive;
+    text-align: center;
+    font-size: 30px;
+    animation: csAppear;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+
+}
+
+.kda-rect-Kills{
+    fill: rgb(52, 128, 228);
+    transition: 0.17s;
+}
+
+.kda-rect-Assists{
+    fill:rgb(41, 121, 141);
+    transition: 0.17s;
+}
+
+.kda-rect-Deaths{
+    fill:#e25f5f;
+    transition: 0.17s;
+}
+
+.kda-rect-Kills:hover{
+    opacity: 0.66;
+    fill:rgb(25, 82, 158);
+}
+
+.kda-rect-Assists:hover{
+    opacity: 0.66;
+    fill:rgb(38, 89, 102);
+}
+
+.kda-rect-Deaths:hover{
+    opacity: 0.66;
+    fill:#b83b3b;
 }
