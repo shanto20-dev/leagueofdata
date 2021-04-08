@@ -7,7 +7,7 @@ const regeneratorRuntime = require("regenerator-runtime");
 
 
 // returns all the matches for a single player
-export const filterByPlayer = (playerName) => d3.csv('../data/2021_Match_Data.csv')
+export const filterByPlayer = (playerName) => d3.csv('https://oracleselixir-downloadable-match-data.s3-us-west-2.amazonaws.com/2021_LoL_esports_match_data_from_OraclesElixir_20210408.csv')
 .then( (result) => {    
     let filteredResult
     filteredResult = result.filter( game => game.player.toLowerCase() === playerName.toLowerCase())
@@ -58,7 +58,7 @@ export function renderData(playerName) {
         
         games.forEach(game => {
             champs.push(game.champion);
-            bestCSGames.push(game.totalcs);
+            bestCSGames.push(game['total cs']);
             damageTaken.push(game.damagetakenperminute);
             damageGiven.push(game.dpm);
             goldGames.push(game.earnedgold);
@@ -513,7 +513,7 @@ const createKDA = (data, playerName) => {
         .padding(0.1);
 
     const y = d3.scaleLinear()
-        .domain([0, 250])
+        .domain([0, 300])
         .range([height - margin.bottom, margin.top]);
 
     svg
