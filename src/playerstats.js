@@ -7,7 +7,7 @@ const regeneratorRuntime = require("regenerator-runtime");
 
 
 // returns all the matches for a single player
-export const filterByPlayer = (playerName) => d3.csv('https://oracleselixir-downloadable-match-data.s3-us-west-2.amazonaws.com/2021_LoL_esports_match_data_from_OraclesElixir_20210408.csv')
+export const filterByPlayer = (playerName) => d3.csv('https://raw.githubusercontent.com/shanto20-dev/leagueofdata/main/data/2021_Match_Data.csv')
 .then( (result) => {    
     let filteredResult
     filteredResult = result.filter( game => game.player.toLowerCase() === playerName.toLowerCase())
@@ -58,7 +58,7 @@ export function renderData(playerName) {
         
         games.forEach(game => {
             champs.push(game.champion);
-            bestCSGames.push(game['total cs']);
+            bestCSGames.push(game['totalcs']);
             damageTaken.push(game.damagetakenperminute);
             damageGiven.push(game.dpm);
             goldGames.push(game.earnedgold);
