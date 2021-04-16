@@ -34,7 +34,11 @@ export const champsPlayed = (playerName) => {
 
 export function renderData(playerName) {
     let champCount = {};
-
+    const picContainer = document.querySelector(".pic-container");
+    const loadingHeader = document.createElement("h1");
+    loadingHeader.textContent = "Loading...";
+    loadingHeader.classList.add("no-exist-header");
+    picContainer.appendChild(loadingHeader);
     filterByPlayer(playerName)
     .then ( (games) => {
         let champs = [];
@@ -47,6 +51,7 @@ export function renderData(playerName) {
         let totalDeaths = [];
         
         if (!games.length){
+            loadingHeader.remove();
             const picContainer = document.querySelector(".pic-container");
             const noExist = document.createElement("h1");
             noExist.textContent = "Unfortunately, we do not have data on this player. Our dataset is limited to professional players in the 2021 season from January to April.";
@@ -57,6 +62,7 @@ export function renderData(playerName) {
 
         
         games.forEach(game => {
+            loadingHeader.remove();
             champs.push(game.champion);
             bestCSGames.push(game['totalcs']);
             damageTaken.push(game.damagetakenperminute);
