@@ -310,6 +310,12 @@ const createKDAObserver = (kdaData, playerName) => {
             if (entry.isIntersecting && renderCounter === 0) {
                 createKDA(kdaData, playerName);
                 renderCounter++;
+                let backButton = document.createElement('a')
+                backButton.classList.add('pro-button', 'backButton')
+                backButton.href = "http://www.sayeefalam.com/leagueofdata/"
+                backButton.textContent = "Find another player's stats"
+                let damageTarget = document.querySelector('.kda-div');
+                damageTarget.appendChild(backButton);
             }
         });
     };
